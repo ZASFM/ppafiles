@@ -24,6 +24,7 @@ void * free(void * block){
    //sbrk(0) gives the current program break address
    programbreak=sbrk(0);
 
+
    /* Check if the block to be freed is the last one in the
 	   linked list. If it is, then we could shrink the size of the
 	   heap and release memory to OS. Else, we will keep the block
