@@ -15,7 +15,42 @@ header_t * get_free_block(size_t size){
 }
 
 
+void * free(void * block){
+   header_t * header, * tmp;
+   void * programbreak;
+   if(!block) return;
+   pthread_mutex_lock(&global_malloc);
+   header=(header_t *)block -1;
+   //sbrk(0) gives the current program break address
+   programbreak=sbrk(0);
 
+   /* Check if the block to be freed is the last one in the
+	   linked list. If it is, then we could shrink the size of the
+	   heap and release memory to OS. Else, we will keep the block
+	   but mark it as free.
+   */
+   if((char *)block + header->s.size == programbreak){
+      if(head==tail){
+         head=tail=NULL;
+      }else{
+         tmp=head;
+         while(tmp){
+            if(tmp->s.next == tail){
+               tmp->s.next=NULL;
+               tail=tmp;
+            }
+            tmp=tmp->s.next;
+         }
+      }
+
+      sbrk(0- header->s.size - sizeof(header_t));
+      pthread_mutex_unlock(&global_malloc);
+      return;
+   }
+
+   header->s.is_free=1;
+   pthread_mutex_unlock(&global_malloc);
+}
 
 
 void * malloc(size_t size){
