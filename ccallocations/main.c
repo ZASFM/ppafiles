@@ -1,6 +1,8 @@
 #include "main.h"
 #include <stdio.h>
 
+
+
 header_t * get_free_block(size_t size){
    header_t * curr = head;
    while(curr){
@@ -11,6 +13,9 @@ header_t * get_free_block(size_t size){
    }
    retrun NULL;
 }
+
+
+
 
 
 void * malloc(size_t size){
@@ -51,9 +56,51 @@ void * malloc(size_t size){
 }
 
 
+void * calloc(size_t num, size_t nsize){
+   size_t size;
+   void * block;
+   if(!num || !nsize) return NULL;
+
+   size=num*nsize;
+   if(nsize!=size/num) return NULL;
+
+   block=malloc(size);
+   if(!block) return NULL;
+
+   //NOTE: calloc shall initialize block with "0"
+   memset(block, 0, size);
+   return block; 
+}
+
+
+void * realloc(void * block, size_t size){
+   header_t * header;
+   //ret contains block, but reallocated to the bigger size "size"
+   void * ret;
+   if(!block || !size) return malloc(size);
+
+   header=(header_t * )block-1;
+   if(header->s.size>=size) return block;
+
+   ret=malloc(size);
+   if(ret){
+      memcpy(ret, block, header->s.size);
+      free(block);
+   }
+   return ret;
+}
 
 
 int main(){
-   sbrk(0);
-   return  0;
+   int numEl=10;
+   int ** parr=malloc(numEl*sizeof(*parr));
+   for(int i=0;i<numEl;i++){
+      parr[i]=malloc(sizeof(**parr));
+   }
+   realloc(parr,(numEl*2)*sizeof(parr));
+   for(int i=0;i<numEl;i++){
+      free(parr[i]);
+   }
+   free(parr);
+   return 0;
 }
