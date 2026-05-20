@@ -26,7 +26,7 @@ Each command runs in its own separate process as part of understanding process c
 
 ```bash
 git clone <repository-url>
-cd <cwriteashell>
+cd cwriteashell
 ```
 
 ### 2. Build the project
