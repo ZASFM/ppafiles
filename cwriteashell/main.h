@@ -46,7 +46,7 @@ char * builtin_str[] ={
    "exit"
 };
 
-int (* builtin_funcs)(char **)={
+int (* builtin_funcs[])(char **)={
    &lsh_cd,
    &lsh_help,
    &lsh_exit
