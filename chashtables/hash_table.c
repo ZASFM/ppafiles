@@ -23,6 +23,13 @@ static ht_item_t *ht_item_new(const char *k, const char *v);
    @return Null
  **/
 static void hs_del_item(ht_item_t *item);
+
+/**
+   @brief open addressing method for finding index of has item
+   @param args "string" as reference for hash function, "num_buckets" as current number of hash items in table, "attempt" as number of collisions so far
+   @return returns the hashed index inside bucket list
+ **/
+static int ht_get_hash(const char *string, const int num_buckets, const int attempt);
 /**************************STATIC FUNCTIONS************************************** */
 
 int ht_hash(const char *s, const int a, const int m)
@@ -34,6 +41,14 @@ int ht_hash(const char *s, const int a, const int m)
       hash = hash % m;
    }
    return (int)hash;
+}
+
+int ht_get_hash(const char *string, const int num_buckets, const int attempt)
+{
+   const int hash_a = ht_hash(string, HT_PRIME_1, num_buckets);
+   const int hash_b = ht_hash(string, HT_PRIME_2, num_buckets);
+   // why +1? because hash_b can also return 0, even if we handling collision, so start at base 1
+   return (hash_a + (attempt * (hash_b + 1))) % attempt;
 }
 
 ht_item_t *ht_item_new(const char *k, const char *v)
