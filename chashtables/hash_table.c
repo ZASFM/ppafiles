@@ -48,8 +48,8 @@ ht_hashtable_t *ht_hashtable_new()
 {
    ht_hashtable_t *map = malloc(sizeof(ht_hashtable_t *));
    map->size = 58;
-   map->cout = 0;
-   map->items = calloc((size_t)map->cout, sizeof(ht_item_t *));
+   map->count = 0;
+   map->items = calloc((size_t)map->count, sizeof(ht_item_t *));
 }
 
 static void ht_del_item(ht_item_t *item)

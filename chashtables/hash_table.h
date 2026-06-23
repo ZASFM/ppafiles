@@ -14,7 +14,7 @@ typedef struct
 typedef struct
 {
    int size;
-   int cout;
+   int count;
    ht_item_t **items;
 } ht_hashtable_t;
 /********************TYPES************************* */
