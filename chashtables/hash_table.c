@@ -86,6 +86,45 @@ void ht_del_hashtable(ht_hashtable_t *ht)
    free(ht);
 }
 
+void ht_insert(ht_hashtable_t * ht, const char * key, const char * value){
+   ht_item_t * item = ht_item_new(key, value);
+   int index = ht_get_hash(item->key, ht->size, 0);
+   ht_item_t * curr_item = ht->items[index];
+   int i = 0;
+
+   //this handles collision, in case index "index" is taken, function changes index "index", until a free spot of found
+   while(curr_item != NULL){
+      index = ht_get_hash(item->key, ht->size , i);
+      curr_item=ht->items[index];
+      i++;
+   }
+
+   ht->items[index]=item;
+   ht->count++;
+   
+}
+
+char * ht_search(ht_hashtable_t * ht, const char * key){
+   int index = ht_get_hash(key, ht->size,  0);
+   ht_item_t * item = ht->items[index];
+   int i = 0;
+
+   while(item != NULL){
+      if(strcmp(item->key,key) == 0){
+         return item->val;
+      }
+
+      index = ht_get_hash(key, ht->size, i);
+      item=ht->items[index];
+      i++;
+   }
+
+   return NULL;
+}
+
+void ht_delete(ht_hashtable_t ht, const char * key){
+}
+
 int main(int argc, char *argv)
 {
    ht_hashtable_t *hash_map = ht_hashtable_new();

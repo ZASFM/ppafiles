@@ -38,6 +38,27 @@ ht_hashtable_t *ht_hashtable_new();
    @return void if successful
  **/
 void ht_del_hashtable(ht_hashtable_t *ht);
+
+/**
+   @brief inserts an item into hash table
+   @param args "ht" as hashtable, "key" as item key, "val" as item val 
+   @return return NULL
+ **/
+void ht_insert(ht_hashtable_t * ht, const char * key, const char * value);
+
+/**
+   @brief searchs inside of hash table, an item with key "key"
+   @param args "ht" as hash table, "key" as search query
+   @return retruns value of the found item, NULL if no item was found
+ **/
+char * search(ht_hashtable_t * ht, const char * key);
+
+/**
+   @brief 
+   @param args 
+   @return 
+ **/
+void ht_delete(ht_hashtable_t * ht, const char * key);
 /**********************DECLARATIONS*********************** */
 
 #endif /*HASH_TABLE*/
