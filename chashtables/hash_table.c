@@ -31,6 +31,13 @@ static void hs_del_item(ht_item_t *item);
  **/
 static int ht_get_hash(const char *string, const int num_buckets, const int attempt);
 
+
+static ht_hashtable_t * ht_new_sized(const int base_size){
+   ht_hashtable_t * ht = xmalloc(sizeof());
+   return ht;
+}
+
+
 // sentinel for a deleted hash item
 static ht_item_t HT_DELETED_ITEM = {NULL, NULL};
 /**************************STATIC FUNCTIONS************************************** */
