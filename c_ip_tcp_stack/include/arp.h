@@ -13,21 +13,22 @@
 #define ARP_WAITING     1
 #define ARP_RESOLVED    2
 
+//header for address resolution protocol, for two devices communication via LAN, with known IP addresses, but unknown MAC addresses
 struct arp_hdr{
-   uint16_t hwtype;
-   uint16_t prototype;
-   unsigned char hwsize;
-   unsigned char prosize;
-   uint16_t opcode;
-   unsigned char data[];
-} __attribute__((packed));
+   uint16_t hwtype; //hardware type
+   uint16_t prototype; // self explanatory
+   unsigned char hwsize; // hardware size
+   unsigned char prosize; // prototype size 
+   uint16_t opcode; //operation code 
+   unsigned char data[]; //data payload, for IPv4 see struct down
+} __attribute__((packed)); //disables GNU adding extra padding bytes, since arp payload is standard 
 
 struct arp_ipv4{
-   unsigned char smac;
-   uint32_t sip;
-   unsigned char dmac;
-   uint32_t dip;
-}__attribute__((packed));
+   unsigned char smac; //sender MAC address
+   uint32_t sip; //sender IP address
+   unsigned char dmac; //destination/target MAC address
+   uint32_t dip; //destination/target IP address
+}__attribute__((packed)); //disables GNU adding extra padding bytes, since arp payload is standard 
 
 
 struct arp_cache_entry{
