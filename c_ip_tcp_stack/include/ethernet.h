@@ -12,6 +12,13 @@ struct eth_hdr{
    unsigned char payload[];
 }__attribute__((packed));
 
+
+/**
+   @brief initializes a header for ethernet communication across LAN
+   @param args " "buf" as buffer
+   @return eth_hdr pointer if successful
+ **/
+
 struct eth_hdr * init_eth_hdr(char * buf);
 
 #endif /*ETHERNET.H*/
